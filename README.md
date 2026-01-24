@@ -34,14 +34,82 @@ Restart Home Assistant.
 
 ### Configuration
 Go to Settings -> Devices & Services.
-
 Click Add Integration.
-
 Search for Fronius MPPT Archiver.
-
 Enter the IP Address of your Fronius Datamanager (e.g., 192.168.1.100).
-
 Submit. Your sensors will appear shortly.
+
+📊 Example ApexCharts Visualization, use the following code:
+```
+type: custom:apexcharts-card
+graph_span: 24h
+header:
+  show: true
+  title: Solar Strings DC Power (W)
+  show_states: true
+  colorize_states: true
+series:
+  - entity: sensor.fronius_power_dc_string_1
+    name: String 1
+    type: area
+    color: "#ff9800"
+    opacity: 0.3
+    stroke_width: 2
+    group_by:
+      func: last
+      duration: 5m
+  - entity: sensor.fronius_power_dc_string_2
+    name: String 2
+    type: area
+    color: "#2196f3"
+    opacity: 0.3
+    stroke_width: 2
+    group_by:
+      func: last
+      duration: 5m
+```
+💻 Example dashboard code:
+```
+type: vertical-stack
+cards:
+  - graph: line
+    type: sensor
+    entity: sensor.fronius_temperature_powerstage
+    name: Inverter Temperature
+    detail: 1
+  - type: grid
+    title: String Performance Comparison
+    columns: 2
+    square: false
+    cards:
+      - type: entities
+        title: MPPT String 1
+        entities:
+          - entity: sensor.fronius_power_dc_string_1
+            name: Power
+          - entity: sensor.fronius_voltage_dc_string_1
+            name: Voltage
+          - entity: sensor.fronius_current_dc_string_1
+            name: Current
+      - type: entities
+        title: MPPT String 2
+        entities:
+          - entity: sensor.fronius_power_dc_string_2
+            name: Power
+          - entity: sensor.fronius_voltage_dc_string_2
+            name: Voltage
+          - entity: sensor.fronius_current_dc_string_2
+            name: Current
+  - type: history-graph
+    title: Power Output History (Watts)
+    entities:
+      - entity: sensor.fronius_power_dc_string_1
+        name: String 1
+      - entity: sensor.fronius_power_dc_string_2
+        name: String 2
+    hours_to_show: 24
+    refresh_interval: 300
+```
 
 **Important Notes**
 * Polling Interval: This integration polls every 5 minutes (300 seconds) to match the internal logging frequency of the Fronius Datamanager.
