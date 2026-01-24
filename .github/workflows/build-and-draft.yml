@@ -1,0 +1,51 @@
+name: Manual or Tag Draft Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]*'
+  workflow_dispatch: # To dodaje przycisk w przeglądarce
+    inputs:
+      version:
+        description: 'Wpisz wersję (np. v1.2.3)'
+        required: true
+        default: 'manual-test'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout the repository"
+        uses: "actions/checkout@v4"
+
+      - name: "Set version"
+        shell: bash
+        run: |
+          # Jeśli uruchomione ręcznie, weź input. Jeśli tagiem, weź nazwę tagu.
+          IF_MANUAL="${{ github.event.inputs.version }}"
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          SELECTED_VERSION=${IF_MANUAL:-$TAG_NAME}
+          
+          echo "VERSION=$SELECTED_VERSION" >> $GITHUB_ENV
+          
+          yq -i -o json ".version=\"$SELECTED_VERSION\"" \
+            "${{ github.workspace }}/custom_components/fronius_mppt/manifest.json"
+
+      - name: "ZIP the integration directory"
+        shell: "bash"
+        run: |
+          cd "${{ github.workspace }}/custom_components/fronius_mppt"
+          zip fronius_mppt.zip -r ./
+
+      - name: "Upload the ZIP file to the draft"
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ github.workspace }}/custom_components/fronius_mppt/fronius_mppt.zip
+          draft: true
+          tag_name: ${{ env.VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
