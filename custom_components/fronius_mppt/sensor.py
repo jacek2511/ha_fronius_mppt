@@ -124,8 +124,11 @@ class FroniusArchiveSensor(FroniusArchiveBaseEntity, SensorEntity):
         self._attr_native_unit_of_measurement = unit
         self._attr_device_class = device_class
         self._attr_state_class = SensorStateClass.MEASUREMENT
-        self._attr_unique_id = f"fronius_{channel}_{ip}"
-        self.entity_id = f"sensor.fronius_{channel}"
+
+        safe_ip = ip.replace(".", "_")
+        safe_channel = channel.lower()
+        self._attr_unique_id = f"fronius_{safe_channel}_{safe_ip}"      
+        self.entity_id = f"sensor.fronius_{safe_channel}"
 
     @property
     def native_value(self):
@@ -139,7 +142,8 @@ class FroniusPowerSensor(FroniusArchiveBaseEntity, SensorEntity):
         self._attr_native_unit_of_measurement = UnitOfPower.WATT
         self._attr_device_class = SensorDeviceClass.POWER
         self._attr_state_class = SensorStateClass.MEASUREMENT
-        self._attr_unique_id = f"fronius_p_s{string_num}_{ip}"
+        safe_ip = ip.replace(".", "_")
+        self._attr_unique_id = f"fronius_p_s{string_num}_{safe_ip}"
         self.entity_id = f"sensor.fronius_power_dc_string_{string_num}"
 
     @property
