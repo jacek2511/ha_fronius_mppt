@@ -1,3 +1,16 @@
+[![GitHub Latest Release][releases_shield]][releases] ![Downloads][downloads] [![License][license-shield]](LICENSE) [![GH-last-commit][latest_commit]][commits] [![HACS][hacsbadge]][hacs] [![Stars][stars]]()
+
+[releases_shield]: https://img.shields.io/github/release/jacek2511/ha_fronius_mppt.svg
+[releases]: https://github.com/jacek2511/ha_fronius_mppt/releases/latest
+[downloads]: https://img.shields.io/github/downloads/jacek2511/ha_fronius_mppt/total
+[license-shield]: https://img.shields.io/github/license/jacek2511/ha_fronius_mppt
+[latest_commit]: https://img.shields.io/github/last-commit/jacek2511/ha_fronius_mppt.svg
+[commits]: https://github.com/jack2511/ha_fronius_mppt/commits/master
+[stars]: https://img.shields.io/github/stars/jacek2511/ha_fronius_mppt?style=flat
+[hacs]: https://hacs.xyz
+[hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg
+
+
 # Fronius MPPT Archive Integration for Home Assistant
 This custom component extracts high-resolution string-level data (Voltage, Current, Power, and Temperature) from Fronius Symo/Primo inverters using the GetArchiveData.cgi API. Unlike the standard integration, this specifically targets the MPPT trackers' archive data, which is useful for detailed string performance monitoring.
 
