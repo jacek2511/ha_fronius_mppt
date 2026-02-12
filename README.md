@@ -3,7 +3,7 @@
 [releases_shield]: https://img.shields.io/github/release/jacek2511/ha_fronius_mppt.svg
 [releases]: https://github.com/jacek2511/ha_fronius_mppt/releases/latest
 [downloads]: https://img.shields.io/github/downloads/jacek2511/ha_fronius_mppt/total
-[license-shield]: https://img.shields.io/github/license/jacek2511/ha_fronius_mppt
+[license-shield]: https://img.shields.io/github/license/jacek2511/ha_fronius_mppt.svg
 [latest_commit]: https://img.shields.io/github/last-commit/jacek2511/ha_fronius_mppt.svg
 [commits]: https://github.com/jack2511/ha_fronius_mppt/commits/master
 [stars]: https://img.shields.io/github/stars/jacek2511/ha_fronius_mppt?style=flat
